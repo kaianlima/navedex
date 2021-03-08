@@ -40,14 +40,10 @@ export function* onLoginStart() {
   yield takeLatest(UserActionTypes.LOGIN_START, login)
 }
 
-export function* onCheckUserSession() {
-  yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated)
-}
-
 export function* onLogoutStart() {
   yield takeLatest(UserActionTypes.LOGOUT_START, logout)
 }
 
 export function* userSagas() {
-  yield all([call(onLoginStart), call(onCheckUserSession), call(onLogoutStart)])
+  yield all([call(onLoginStart), call(onLogoutStart)])
 }

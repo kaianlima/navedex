@@ -7,7 +7,22 @@ export const selectNavers = createSelector(
   (naver) => naver.navers,
 )
 
+export const selectFeedback = createSelector(
+  [selectNaver],
+  (naver) => naver.feedback,
+)
+
 export const selectIsFetching = createSelector(
   [selectNaver],
   (naver) => naver.isFetching,
+)
+
+export const selectCurrentNaver = createSelector(
+  [selectNaver],
+  (naver) => naver.currentNaver,
+)
+
+export const selectNaversForOverview = createSelector(
+  [selectNavers],
+  (navers) => (navers ? Object.keys(navers).map((key) => navers[key]) : []),
 )

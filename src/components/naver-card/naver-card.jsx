@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { connect } from "react-redux"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
@@ -8,57 +8,83 @@ import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import Typography from "@material-ui/core/Typography"
-import CreateIcon from "@material-ui/icons/Create"
-import DeleteIcon from "@material-ui/icons/Delete"
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 280,
-    maxWidth: 280,
-  },
+import DeleteIconButton from "../delete-icon-button/delete-icon-button"
+import EditIconButton from "../edit-icon-button/edit-icon-button"
+import {
+  toggleNaverDeleteDialog,
+  toggleNaverDetailDialog,
+} from "../../redux/dialog/dialog.actions"
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
   media: {
-    height: 280,
+    height: "17.5rem",
   },
-  cardTitle: {
+  cardName: {
     fontWeight: 600,
+    fontSize: "1rem",
   },
-})
+  iconsContainer: {
+    marginLeft: "0.5rem",
+  },
+}))
 
-const NaverCard = () => {
+const NaverCard = ({
+  index,
+  id,
+  url,
+  name,
+  job_role,
+  admission_date,
+  birthdate,
+  project,
+  toggleNaverDeleteDialog,
+  toggleNaverDetailDialog,
+}) => {
   const classes = useStyles()
+
+  const naverData = { url, name, job_role, admission_date, birthdate, project }
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea
+        onClick={() => {
+          toggleNaverDetailDialog(naverData)
+        }}
+      >
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={url}
           title="Contemplative Reptile"
         />
       </CardActionArea>
       <CardContent>
         <Typography
-          className={classes.cardTitle}
+          className={classes.cardName}
           gutterBottom
           variant="h5"
           component="h2"
         >
-          Juliano Reis
+          {name}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Front-end Developer
+        <Typography variant="body1" color="textSecondary" component="p">
+          {job_role}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Link to="/">
-          <DeleteIcon color="secondary" />
-        </Link>
-        <Link to="/">
-          <CreateIcon color="secondary" />
-        </Link>
+      <CardActions className={classes.iconsContainer}>
+        <DeleteIconButton id={id} />
+        <EditIconButton />
       </CardActions>
     </Card>
   )
 }
 
-export default NaverCard
+const mapDispatchToProps = (dispatch) => ({
+  toggleNaverDeleteDialog: (naverId) =>
+    dispatch(toggleNaverDeleteDialog(naverId)),
+  toggleNaverDetailDialog: (naverData) =>
+    dispatch(toggleNaverDetailDialog(naverData)),
+})
+
+export default connect(null, mapDispatchToProps)(NaverCard)

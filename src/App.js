@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense, lazy } from "react"
 import { Switch, Route } from "react-router-dom"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -10,6 +10,8 @@ import LoginPage from "./pages/login/login"
 import Spinner from "./components/spinner/spinner"
 import ErrorBoundary from "./components/error-boundary/error-boundary"
 import PrivateRoute from "./components/private-route/private-route"
+
+const NaverPage = lazy(() => import("./pages/naver/naver"))
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +39,7 @@ function App() {
             <div className={classes.content}>
               <div className={classes.toolbar} />
               <PrivateRoute exact path="/" component={Homepage} />
+              <PrivateRoute exact path="/naver" component={NaverPage} />
               <Route exact path="/login" component={LoginPage} />
             </div>
           </Suspense>

@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Formik, Form, Field } from "formik"
 import { TextField } from "formik-material-ui"
+import * as Yup from "yup"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
@@ -11,27 +12,43 @@ import LinearProgress from "@material-ui/core/LinearProgress"
 import { loginStart } from "../../redux/user/user.actions"
 
 const useStyles = makeStyles((theme) => ({
+  inputModified: {
+    "& .MuiFormLabel-root": {
+      fontWeight: 600,
+      color: theme.palette.secondary.main,
+      top: theme.spacing(-1.5),
+      left: theme.spacing(-1.5),
+    },
+    "& .MuiInputBase-input": {
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: theme.palette.secondary.main,
+    },
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: theme.palette.secondary.main,
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      borderColor: theme.palette.secondary.main,
+    },
+  },
   buttonText: {
     fontWeight: "600",
   },
 }))
 
-const validate = (values) => {
-  const errors = {}
-  if (!values.email) {
-    errors.email = "Obrigatório"
-  } else if (values.email.length > 100) {
-    errors.email = "Máximo de 100 caracteres"
-  }
-
-  if (!values.password) {
-    errors.password = "Obrigatório"
-  } else if (values.password.length > 100) {
-    errors.password = "Máximo de 100 caracteres"
-  }
-
-  return errors
-}
+const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .min(1, "Muito curto")
+    .max(100, "Muito longo")
+    .email("Email inválido")
+    .required("Obrigatório"),
+  password: Yup.string()
+    .min(1, "Muito curto")
+    .max(100, "Muito longo")
+    .required("Obrigatório"),
+})
 
 const LoginForm = ({ loginStart }) => {
   const classes = useStyles()
@@ -42,7 +59,7 @@ const LoginForm = ({ loginStart }) => {
         email: "",
         password: "",
       }}
-      validate={validate}
+      validationSchema={LoginSchema}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(false)
 
@@ -54,22 +71,34 @@ const LoginForm = ({ loginStart }) => {
           <Grid container direction="column" spacing={4} item>
             <Grid item xs={12}>
               <Field
+                className={classes.inputModified}
                 component={TextField}
                 name="email"
                 type="email"
-                label="Email"
                 variant="outlined"
+                size="small"
+                label="Email"
+                placeholder="Email"
                 fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <Field
+                className={classes.inputModified}
                 component={TextField}
                 name="password"
                 type="password"
                 variant="outlined"
+                size="small"
                 label="Senha"
+                placeholder="Senha"
                 fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
             {isSubmitting && <LinearProgress />}

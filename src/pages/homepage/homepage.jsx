@@ -1,4 +1,6 @@
 import React from "react"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
@@ -6,7 +8,8 @@ import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 
-import NaverCard from "../../components/naver-card/naver-card"
+import NaversOverview from "../../components/navers-overview/navers-overview"
+import { fetchNaversStart } from "../../redux/naver/naver.actions"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Homepage = () => {
+const Homepage = ({ fetchNaversStart }) => {
   const classes = useStyles()
+
+  React.useEffect(() => {
+    fetchNaversStart()
+  }, [fetchNaversStart])
 
   return (
     <main className={classes.root}>
@@ -42,19 +49,27 @@ const Homepage = () => {
             </Box>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="secondary" size="large">
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              component={Link}
+              to="/naver"
+            >
               <span className={classes.buttonText}>Adicionar Naver</span>
             </Button>
           </Grid>
         </Grid>
         <Grid container item xs={12}>
-          <Grid item>
-            <NaverCard />
-          </Grid>
+          <NaversOverview />
         </Grid>
       </Grid>
     </main>
   )
 }
 
-export default Homepage
+const mapDispatchToProps = (dispatch) => ({
+  fetchNaversStart: () => dispatch(fetchNaversStart()),
+})
+
+export default connect(null, mapDispatchToProps)(Homepage)
