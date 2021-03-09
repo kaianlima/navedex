@@ -2,73 +2,25 @@ import React from "react"
 import { useHistory } from "react-router-dom"
 import { connect } from "react-redux"
 import { createStructuredSelector } from "reselect"
-import { Formik, Form, Field } from "formik"
-import { TextField } from "formik-material-ui"
-import * as Yup from "yup"
 
+import { Formik, Form } from "formik"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
 import LinearProgress from "@material-ui/core/LinearProgress"
 
+import NaverSchema from "./naver-schema"
 import MaskFormatDate from "../mask-format-date/mask-format-date"
+import CustomButton from "../custom-button/custom-button"
+import CustomInputField from "../custom-input-field/custom-input-field"
 import { selectCurrentNaver } from "../../redux/naver/naver.selectors"
 import { postNaverStart, putNaverStart } from "../../redux/naver/naver.actions"
 import { dateISOFormat } from "../../utils/time"
 
 const useStyles = makeStyles((theme) => ({
-  inputModified: {
-    "& .MuiFormLabel-root": {
-      fontWeight: 600,
-      color: theme.palette.secondary.main,
-      top: theme.spacing(-1.5),
-      left: theme.spacing(-1.5),
-    },
-    "& .MuiInputBase-input": {
-      borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: theme.palette.secondary.main,
-    },
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: theme.palette.secondary.main,
-    },
-    "&:hover .MuiOutlinedInput-input": {
-      borderColor: theme.palette.secondary.main,
-    },
-  },
   buttonText: {
     fontWeight: "600",
   },
 }))
-
-const NaverSchema = Yup.object().shape({
-  job_role: Yup.string()
-    .min(2, "Muito curto")
-    .max(100, "Muito longo")
-    .required("Obrigatório"),
-  admission_date: Yup.string()
-    .min(2, "Muito curto")
-    .max(10, "Muito longo")
-    .required("Obrigatório"),
-  birthdate: Yup.string()
-    .min(2, "Muito curto")
-    .max(10, "Muito longo")
-    .required("Obrigatório"),
-  project: Yup.string()
-    .min(2, "Muito curto")
-    .max(100, "Muito longo")
-    .required("Obrigatório"),
-  name: Yup.string()
-    .min(2, "Muito curto")
-    .max(100, "Muito longo")
-    .required("Obrigatório"),
-  url: Yup.string()
-    .min(2, "Muito curto")
-    .max(200, "Muito longo")
-    .required("Obrigatório"),
-})
 
 const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
   const classes = useStyles()
@@ -92,7 +44,6 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
 
         if (id) {
           values["id"] = id
-          console.log(values)
           await putNaverStart(values)
         } else {
           await postNaverStart(values)
@@ -105,72 +56,36 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
           <Grid container direction="column" spacing={4} item>
             <Grid container item spacing={4}>
               <Grid item xs={6}>
-                <Field
-                  className={classes.inputModified}
-                  component={TextField}
+                <CustomInputField
                   name="name"
                   type="text"
-                  variant="outlined"
-                  size="small"
-                  label="Nome"
-                  placeholder="Nome"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  labelPlaceholder="Nome"
                 />
               </Grid>
               <Grid item xs={6}>
-                <Field
-                  className={classes.inputModified}
-                  component={TextField}
+                <CustomInputField
                   name="job_role"
                   type="text"
-                  variant="outlined"
-                  size="small"
-                  label="Cargo"
-                  placeholder="Cargo"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  labelPlaceholder="Cargo"
                 />
               </Grid>
             </Grid>
             <Grid container item spacing={4}>
               <Grid item xs={6}>
-                <Field
-                  className={classes.inputModified}
-                  component={TextField}
+                <CustomInputField
                   name="birthdate"
                   type="text"
-                  variant="outlined"
-                  size="small"
-                  label="Ano de Nascimento"
-                  placeholder="Ano de Nascimento"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  labelPlaceholder="Ano de Nascimento"
                   InputProps={{
                     inputComponent: MaskFormatDate,
                   }}
                 />
               </Grid>
               <Grid item xs={6}>
-                <Field
-                  className={classes.inputModified}
-                  component={TextField}
+                <CustomInputField
                   name="admission_date"
                   type="text"
-                  variant="outlined"
-                  size="small"
-                  label="Data de Admissão"
-                  placeholder="Data de Admissão"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  labelPlaceholder="Data de Admissão"
                   InputProps={{
                     inputComponent: MaskFormatDate,
                   }}
@@ -179,51 +94,30 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
             </Grid>
             <Grid container item spacing={4}>
               <Grid item xs={6}>
-                <Field
-                  className={classes.inputModified}
-                  component={TextField}
+                <CustomInputField
                   name="project"
                   type="text"
-                  variant="outlined"
-                  size="small"
-                  label="Projetos que participou"
-                  placeholder="Projetos que participou"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  labelPlaceholder="Projetos que participou"
                 />
               </Grid>
               <Grid item xs={6}>
-                <Field
-                  className={classes.inputModified}
-                  component={TextField}
+                <CustomInputField
                   name="url"
                   type="text"
-                  variant="outlined"
-                  size="small"
-                  label="URL da foto do Naver"
-                  placeholder="URL da foto do Naver"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  labelPlaceholder="URL da foto do Naver"
                 />
               </Grid>
             </Grid>
             {isSubmitting && <LinearProgress />}
             <Grid container item justify="flex-end">
               <Grid item xs={4}>
-                <Button
-                  variant="contained"
+                <CustomButton
                   color="secondary"
-                  size="large"
-                  fullWidth
-                  disabled={isSubmitting}
-                  onClick={submitForm}
+                  isSubmitting={isSubmitting}
+                  submitForm={submitForm}
                 >
                   <span className={classes.buttonText}>Salvar</span>
-                </Button>
+                </CustomButton>
               </Grid>
             </Grid>
           </Grid>

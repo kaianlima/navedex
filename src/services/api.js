@@ -28,13 +28,23 @@ export const postUserLogin = async (email, password) => {
   return user
 }
 
+export const setBearerToken = () => {
+  const token = store.getState().user.currentUser.token
+
+  if (token) {
+    api.defaults.headers.common["Authorization"] = "Bearer " + token
+  } else {
+    api.defaults.headers.common["Authorization"] = null
+  }
+}
+
 export const removeBearerToken = () => {
   axios.defaults.headers.common = {}
 }
 
 export const fetchNavers = async () => {
   let navers = null
-  setStoreToken()
+  setBearerToken()
 
   try {
     navers = await api.get("navers")
@@ -46,7 +56,7 @@ export const fetchNavers = async () => {
 
 export const postNaver = async (naverData) => {
   let naver = null
-  setStoreToken()
+  setBearerToken()
 
   let { name, admission_date, job_role, project, birthdate, url } = naverData
   admission_date = formDateStringToFormat(admission_date)
@@ -75,7 +85,7 @@ export const postNaver = async (naverData) => {
 
 export const putNaver = async (naverData) => {
   let naver = null
-  setStoreToken()
+  setBearerToken()
 
   let {
     id,
@@ -89,8 +99,6 @@ export const putNaver = async (naverData) => {
   admission_date = formDateStringToFormat(admission_date)
   birthdate = formDateStringToFormat(birthdate)
 
-  console.log(id)
-  console.log(naverData)
   try {
     naver = await api.put(`navers/${id}`, {
       name,
@@ -113,7 +121,7 @@ export const putNaver = async (naverData) => {
 }
 
 export const deleteNaver = async (naverId) => {
-  setStoreToken()
+  setBearerToken()
 
   try {
     await api.delete(`navers/${naverId}`)
@@ -127,15 +135,6 @@ export const deleteNaver = async (naverId) => {
   }
 
   return feedback
-}
-
-export const setStoreToken = () => {
-  const token = store.getState().user.currentUser.token
-  if (token) {
-    api.defaults.headers.common["Authorization"] = "Bearer " + token
-  } else {
-    api.defaults.headers.common["Authorization"] = null
-  }
 }
 
 export default api

@@ -11,8 +11,14 @@ import DialogActions from "@material-ui/core/DialogActions"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Button from "@material-ui/core/Button"
 
-import { selectNaverDeleteDialogOpen } from "../../redux/dialog/dialog.selectors"
-import { toggleNaverDeleteDialog } from "../../redux/dialog/dialog.actions"
+import {
+  selectNaverDeleteDialogOpen,
+  selectNaverDetailDialogOpen,
+} from "../../redux/dialog/dialog.selectors"
+import {
+  toggleNaverDeleteDialog,
+  toggleNaverDetailDialog,
+} from "../../redux/dialog/dialog.actions"
 import { deleteNaverStart } from "../../redux/naver/naver.actions"
 
 const useStyles = makeStyles({
@@ -33,9 +39,11 @@ const useStyles = makeStyles({
 })
 
 const NaverDeleteDialog = ({
-  naverDeleteDialogOpen,
   naver,
+  naverDeleteDialogOpen,
+  naverDetailDialogOpen,
   toggleNaverDeleteDialog,
+  toggleNaverDetailDialog,
   deleteNaverStart,
 }) => {
   const classes = useStyles()
@@ -80,6 +88,10 @@ const NaverDeleteDialog = ({
                     onClick={() => {
                       deleteNaverStart(naver.id)
                       toggleNaverDeleteDialog()
+
+                      if (naverDetailDialogOpen) {
+                        toggleNaverDetailDialog()
+                      }
                     }}
                   >
                     <span className={classes.buttonText}>Excluir</span>
@@ -97,10 +109,12 @@ const NaverDeleteDialog = ({
 
 const mapStateToProps = createStructuredSelector({
   naverDeleteDialogOpen: selectNaverDeleteDialogOpen,
+  naverDetailDialogOpen: selectNaverDetailDialogOpen,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   toggleNaverDeleteDialog: () => dispatch(toggleNaverDeleteDialog()),
+  toggleNaverDetailDialog: () => dispatch(toggleNaverDetailDialog()),
   deleteNaverStart: (naverId) => dispatch(deleteNaverStart(naverId)),
 })
 

@@ -13,11 +13,7 @@ import DeleteIconButton from "../delete-icon-button/delete-icon-button"
 import EditIconButton from "../edit-icon-button/edit-icon-button"
 import { selectNaverDetailDialogOpen } from "../../redux/dialog/dialog.selectors"
 import { toggleNaverDetailDialog } from "../../redux/dialog/dialog.actions"
-import {
-  dateToNowInYears,
-  dateISOToNowDistance,
-  dateToNowDistance,
-} from "../../utils/time"
+import { dateToNowInYears, dateISOToNowDistance } from "../../utils/time"
 
 const useStyles = makeStyles({
   media: {
@@ -146,10 +142,10 @@ const NaverDetailDialog = ({
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item>
-                    <DeleteIconButton id={naver.id} />
+                    <DeleteIconButton naver={naver} />
                   </Grid>
                   <Grid item>
-                    <EditIconButton id={naver.id} />
+                    <EditIconButton naver={naver} />
                   </Grid>
                 </Grid>
               </Grid>

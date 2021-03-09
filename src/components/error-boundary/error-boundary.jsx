@@ -25,14 +25,12 @@ class ErrorBoundary extends React.Component {
       return (
         <Grid container justify="center" item xs={12}>
           <Box my={2}>
-            <div>
-              <Typography variant="h1" component="h2" align="center">
-                404
-              </Typography>
-              <Typography variant="h5" gutterBottom>
-                Página quebrada
-              </Typography>
-            </div>
+            <Typography variant="h1" component="h2" align="center">
+              404
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              Página quebrada
+            </Typography>
           </Box>
         </Grid>
       )

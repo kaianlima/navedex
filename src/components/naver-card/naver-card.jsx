@@ -76,7 +76,7 @@ const NaverCard = ({
         </Typography>
       </CardContent>
       <CardActions className={classes.iconsContainer}>
-        <DeleteIconButton id={id} />
+        <DeleteIconButton naver={naverData} />
         <EditIconButton naver={naverData} />
       </CardActions>
     </Card>

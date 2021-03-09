@@ -31,7 +31,8 @@ export function* fetchNaversAsync() {
   }
 }
 
-export function* setCurrentNaverAfterDetailDialog({ payload }) {
+export function* setCurrentNaverAfterDialog({ payload }) {
+  console.log(payload)
   if (payload) {
     yield put(setCurrentNaver(payload))
   }
@@ -39,8 +40,7 @@ export function* setCurrentNaverAfterDetailDialog({ payload }) {
 
 export function* postNaverAsync({ payload }) {
   const { naver, feedback } = yield postNaver(payload)
-  console.log(naver)
-  console.log(feedback)
+
   try {
     yield put(postNaverSuccess({ naver, feedback }))
   } catch (error) {
@@ -50,8 +50,7 @@ export function* postNaverAsync({ payload }) {
 
 export function* putNaverAsync({ payload }) {
   const { naver, feedback } = yield putNaver(payload)
-  console.log(naver)
-  console.log(feedback)
+
   try {
     yield put(putNaverSuccess({ naver, feedback }))
   } catch (error) {
@@ -76,7 +75,14 @@ export function* onFetchNaversStart() {
 export function* onToggleNaverDetailDialog() {
   yield takeLatest(
     DialogActionTypes.TOGGLE_NAVER_DETAIL_DIALOG,
-    setCurrentNaverAfterDetailDialog,
+    setCurrentNaverAfterDialog,
+  )
+}
+
+export function* onToggleNaverDeleteDialog() {
+  yield takeLatest(
+    DialogActionTypes.TOGGLE_NAVER_DELETE_DIALOG,
+    setCurrentNaverAfterDialog,
   )
 }
 
@@ -104,6 +110,7 @@ export function* naverSagas() {
   yield all([
     call(onFetchNaversStart),
     call(onToggleNaverDetailDialog),
+    call(onToggleNaverDeleteDialog),
     call(onPostNaverStart),
     call(onPutNaverStart),
     call(onDeleteNaverStart),

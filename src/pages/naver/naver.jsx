@@ -10,8 +10,8 @@ import IconButton from "@material-ui/core/IconButton"
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos"
 
 import NaverForm from "../../components/naver-form/naver-form"
-import { selectNaverFeedbackDialogOpen } from "../../redux/dialog/dialog.selectors"
-import { toggleNaverFeedbackDialog } from "../../redux/dialog/dialog.actions"
+import { selectNaverDetailDialogOpen } from "../../redux/dialog/dialog.selectors"
+import { toggleNaverDetailDialog } from "../../redux/dialog/dialog.actions"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,14 +26,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Naver = ({
-  match,
-  naverFeedbackDialogOpen,
-  toggleNaverFeedbackDialog,
-}) => {
+const Naver = ({ match, naverDetailDialogOpen, toggleNaverDetailDialog }) => {
   const classes = useStyles()
 
   const title = match.params.id ? "Editar Naver" : "Adicionar Naver"
+
+  React.useEffect(() => {
+    if (naverDetailDialogOpen === true) {
+      toggleNaverDetailDialog()
+    }
+  }, [naverDetailDialogOpen, toggleNaverDetailDialog])
 
   return (
     <main className={classes.root}>
@@ -67,11 +69,11 @@ const Naver = ({
 }
 
 const mapStateToProps = createStructuredSelector({
-  naverFeedbackDialogOpen: selectNaverFeedbackDialogOpen,
+  naverDetailDialogOpen: selectNaverDetailDialogOpen,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleNaverFeedbackDialog: () => dispatch(toggleNaverFeedbackDialog()),
+  toggleNaverDetailDialog: () => dispatch(toggleNaverDetailDialog()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Naver)
