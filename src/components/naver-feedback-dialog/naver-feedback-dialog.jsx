@@ -5,9 +5,12 @@ import { createStructuredSelector } from "reselect"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
+import IconButton from "@material-ui/core/IconButton"
+import CloseIcon from "@material-ui/icons/Close"
 
 import { selectNaverFeedbackDialogOpen } from "../../redux/dialog/dialog.selectors"
 import { selectFeedback } from "../../redux/naver/naver.selectors"
@@ -15,6 +18,10 @@ import { toggleNaverFeedbackDialog } from "../../redux/dialog/dialog.actions"
 
 const useStyles = makeStyles({
   dialogTitle: {
+    marginTop: "1rem",
+    marginBottom: "1rem",
+  },
+  title: {
     fontWeight: 600,
   },
   dialogPaper: {
@@ -32,7 +39,7 @@ const useStyles = makeStyles({
   },
 })
 
-const NaverDetailDialog = ({
+const NaverFeedbackDialog = ({
   feedback,
   naverFeedbackDialogOpen,
   toggleNaverFeedbackDialog,
@@ -50,10 +57,23 @@ const NaverDetailDialog = ({
           fullWidth
           classes={{ paper: classes.dialogPaper }}
         >
-          <DialogTitle>{feedback.title}</DialogTitle>
+          <Grid container justify="space-between" spacing={2}>
+            <Grid className={classes.dialogTitle} item>
+              <DialogTitle className={classes.title}>
+                {feedback.title}
+              </DialogTitle>
+            </Grid>
+            <Grid className={classes.dialogCloseIcon} item>
+              <IconButton size="small" onClick={toggleNaverFeedbackDialog}>
+                <CloseIcon color="secondary" />
+              </IconButton>
+            </Grid>
+          </Grid>
+
           <DialogContent>
             <DialogContentText>{feedback.content}</DialogContentText>
           </DialogContent>
+          <DialogActions />
         </Dialog>
       ) : null}
     </>
@@ -69,4 +89,4 @@ const mapDispatchToProps = (dispatch) => ({
   toggleNaverFeedbackDialog: () => dispatch(toggleNaverFeedbackDialog()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NaverDetailDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(NaverFeedbackDialog)

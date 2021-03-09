@@ -5,15 +5,19 @@ import { createStructuredSelector } from "reselect"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Dialog from "@material-ui/core/Dialog"
-import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
+import IconButton from "@material-ui/core/IconButton"
 import CloseIcon from "@material-ui/icons/Close"
 
 import DeleteIconButton from "../delete-icon-button/delete-icon-button"
 import EditIconButton from "../edit-icon-button/edit-icon-button"
 import { selectNaverDetailDialogOpen } from "../../redux/dialog/dialog.selectors"
 import { toggleNaverDetailDialog } from "../../redux/dialog/dialog.actions"
-import { dateToNowInYears, dateToNowDistance } from "../../utils/time"
+import {
+  dateToNowInYears,
+  dateISOToNowDistance,
+  dateToNowDistance,
+} from "../../utils/time"
 
 const useStyles = makeStyles({
   media: {
@@ -122,7 +126,7 @@ const NaverDetailDialog = ({
                       Tempo de empresa
                     </Typography>
                     <Typography variant="body1" color="secondary" component="p">
-                      {dateToNowDistance(naver.admission_date)}
+                      {dateISOToNowDistance(naver.admission_date)}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -145,7 +149,7 @@ const NaverDetailDialog = ({
                     <DeleteIconButton id={naver.id} />
                   </Grid>
                   <Grid item>
-                    <EditIconButton />
+                    <EditIconButton id={naver.id} />
                   </Grid>
                 </Grid>
               </Grid>

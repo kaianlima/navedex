@@ -11,10 +11,7 @@ import Typography from "@material-ui/core/Typography"
 
 import DeleteIconButton from "../delete-icon-button/delete-icon-button"
 import EditIconButton from "../edit-icon-button/edit-icon-button"
-import {
-  toggleNaverDeleteDialog,
-  toggleNaverDetailDialog,
-} from "../../redux/dialog/dialog.actions"
+import { toggleNaverDetailDialog } from "../../redux/dialog/dialog.actions"
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -31,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NaverCard = ({
-  index,
   id,
   url,
   name,
@@ -39,12 +35,19 @@ const NaverCard = ({
   admission_date,
   birthdate,
   project,
-  toggleNaverDeleteDialog,
   toggleNaverDetailDialog,
 }) => {
   const classes = useStyles()
 
-  const naverData = { url, name, job_role, admission_date, birthdate, project }
+  const naverData = {
+    id,
+    url,
+    name,
+    job_role,
+    admission_date,
+    birthdate,
+    project,
+  }
 
   return (
     <Card className={classes.root}>
@@ -56,7 +59,7 @@ const NaverCard = ({
         <CardMedia
           className={classes.media}
           image={url}
-          title="Contemplative Reptile"
+          title={"Naver " + name}
         />
       </CardActionArea>
       <CardContent>
@@ -74,15 +77,13 @@ const NaverCard = ({
       </CardContent>
       <CardActions className={classes.iconsContainer}>
         <DeleteIconButton id={id} />
-        <EditIconButton />
+        <EditIconButton naver={naverData} />
       </CardActions>
     </Card>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleNaverDeleteDialog: (naverId) =>
-    dispatch(toggleNaverDeleteDialog(naverId)),
   toggleNaverDetailDialog: (naverData) =>
     dispatch(toggleNaverDetailDialog(naverData)),
 })

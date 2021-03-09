@@ -1,5 +1,7 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 import { connect } from "react-redux"
+import { createStructuredSelector } from "reselect"
 import { Formik, Form, Field } from "formik"
 import { TextField } from "formik-material-ui"
 import * as Yup from "yup"
@@ -10,7 +12,9 @@ import Button from "@material-ui/core/Button"
 import LinearProgress from "@material-ui/core/LinearProgress"
 
 import MaskFormatDate from "../mask-format-date/mask-format-date"
-import { postNaverStart } from "../../redux/naver/naver.actions"
+import { selectCurrentNaver } from "../../redux/naver/naver.selectors"
+import { postNaverStart, putNaverStart } from "../../redux/naver/naver.actions"
+import { dateISOFormat } from "../../utils/time"
 
 const useStyles = makeStyles((theme) => ({
   inputModified: {
@@ -66,24 +70,34 @@ const NaverSchema = Yup.object().shape({
     .required("Obrigatório"),
 })
 
-const NaverForm = ({ postNaverStart }) => {
+const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
   const classes = useStyles()
+
+  const history = useHistory()
+  const values = {
+    job_role: id ? naver.job_role : "",
+    admission_date: id ? dateISOFormat(naver.admission_date) : "",
+    birthdate: id ? dateISOFormat(naver.birthdate) : "",
+    project: id ? naver.project : "",
+    name: id ? naver.name : "",
+    url: id ? naver.url : "",
+  }
 
   return (
     <Formik
-      initialValues={{
-        job_role: "",
-        admission_date: "",
-        birthdate: "",
-        project: "",
-        name: "",
-        url: "",
-      }}
+      initialValues={values}
       validationSchema={NaverSchema}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(false)
 
-        postNaverStart(values)
+        if (id) {
+          values["id"] = id
+          console.log(values)
+          await putNaverStart(values)
+        } else {
+          await postNaverStart(values)
+        }
+        history.push("/")
       }}
     >
       {({ submitForm, isSubmitting }) => (
@@ -219,8 +233,13 @@ const NaverForm = ({ postNaverStart }) => {
   )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  postNaverStart: (naverData) => dispatch(postNaverStart(naverData)),
+const mapStateToProps = createStructuredSelector({
+  naver: selectCurrentNaver,
 })
 
-export default connect(null, mapDispatchToProps)(NaverForm)
+const mapDispatchToProps = (dispatch) => ({
+  postNaverStart: (naverData) => dispatch(postNaverStart(naverData)),
+  putNaverStart: (naverData) => dispatch(putNaverStart(naverData)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NaverForm)

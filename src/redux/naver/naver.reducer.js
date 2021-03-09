@@ -20,6 +20,7 @@ const NaverReducer = (state = INITIAL_STATE, action) => {
         ...state,
         navers: action.payload,
         isAuthenticated: false,
+        isFetching: false,
         error: null,
       }
     case NaverActionTypes.FETCH_NAVERS_FAILURE:
@@ -28,17 +29,25 @@ const NaverReducer = (state = INITIAL_STATE, action) => {
     case NaverActionTypes.DELETE_NAVER_FAILURE:
       return {
         ...state,
+        isFetching: false,
         error: action.payload,
       }
     case NaverActionTypes.SET_CURRENT_NAVER:
-    case NaverActionTypes.POST_NAVER_START:
-    case NaverActionTypes.PUT_NAVER_START:
       return {
         ...state,
         currentNaver: action.payload,
       }
     case NaverActionTypes.POST_NAVER_SUCCESS:
     case NaverActionTypes.PUT_NAVER_SUCCESS:
+      return {
+        ...state,
+        currentNaver: action.payload.naver,
+        feedback: {
+          title: action.payload.feedback.title,
+          content: action.payload.feedback.content,
+        },
+        error: null,
+      }
     case NaverActionTypes.DELETE_NAVER_SUCCESS:
       return {
         ...state,

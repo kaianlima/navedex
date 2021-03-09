@@ -39,7 +39,7 @@ function App() {
             <div className={classes.content}>
               <div className={classes.toolbar} />
               <PrivateRoute exact path="/" component={Homepage} />
-              <PrivateRoute exact path="/naver" component={NaverPage} />
+              <PrivateRoute exact path="/naver/:id?" component={NaverPage} />
               <Route exact path="/login" component={LoginPage} />
             </div>
           </Suspense>

@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid"
 import NaverCard from "../../components/naver-card/naver-card"
 import NaverDetailDialog from "../naver-detail-dialog/naver-detail-dialog"
 import NaverDeleteDialog from "../naver-delete-dialog/naver-delete-dialog"
+import NaverFeedbackDialog from "../naver-feedback-dialog/naver-feedback-dialog"
 import {
   selectNaversForOverview,
   selectCurrentNaver,
@@ -35,11 +36,12 @@ const NaversOverview = ({ navers, naver }) => {
               item
               xs={matchesSm ? 6 : 3}
             >
-              <NaverCard index={index} {...naverProps} />
+              <NaverCard {...naverProps} />
             </Grid>
           ))}
           <NaverDetailDialog naver={naver} />
           <NaverDeleteDialog naver={naver} />
+          <NaverFeedbackDialog />
         </>
       ) : null}
     </Grid>

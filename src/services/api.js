@@ -45,6 +45,7 @@ export const fetchNavers = async () => {
 }
 
 export const postNaver = async (naverData) => {
+  let naver = null
   setStoreToken()
 
   let { name, admission_date, job_role, project, birthdate, url } = naverData
@@ -52,7 +53,7 @@ export const postNaver = async (naverData) => {
   birthdate = formDateStringToFormat(birthdate)
 
   try {
-    await api.post("navers", {
+    naver = await api.post("navers", {
       name,
       admission_date,
       job_role,
@@ -69,10 +70,11 @@ export const postNaver = async (naverData) => {
     content: "Naver criado com sucesso!",
   }
 
-  return feedback
+  return { naver, feedback }
 }
 
 export const putNaver = async (naverData) => {
+  let naver = null
   setStoreToken()
 
   let {
@@ -87,8 +89,10 @@ export const putNaver = async (naverData) => {
   admission_date = formDateStringToFormat(admission_date)
   birthdate = formDateStringToFormat(birthdate)
 
+  console.log(id)
+  console.log(naverData)
   try {
-    await api.put(`navers/${id}`, {
+    naver = await api.put(`navers/${id}`, {
       name,
       admission_date,
       job_role,
@@ -105,33 +109,14 @@ export const putNaver = async (naverData) => {
     content: "Naver atualizado com sucesso!",
   }
 
-  return feedback
+  return { naver, feedback }
 }
 
-export const deleteNaver = async (naverData) => {
+export const deleteNaver = async (naverId) => {
   setStoreToken()
 
-  let {
-    id,
-    name,
-    admission_date,
-    job_role,
-    project,
-    birthdate,
-    url,
-  } = naverData
-  admission_date = formDateStringToFormat(admission_date)
-  birthdate = formDateStringToFormat(birthdate)
-
   try {
-    await api.delete(`navers/${id}`, {
-      name,
-      admission_date,
-      job_role,
-      project,
-      birthdate,
-      url,
-    })
+    await api.delete(`navers/${naverId}`)
   } catch (error) {
     throw error.message
   }

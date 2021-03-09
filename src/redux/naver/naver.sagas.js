@@ -11,8 +11,15 @@ import {
   postNaverFailure,
   putNaverSuccess,
   putNaverFailure,
+  deleteNaverSuccess,
+  deleteNaverFailure,
 } from "./naver.actions"
-import { fetchNavers, postNaver, putNaver } from "../../services/api"
+import {
+  fetchNavers,
+  postNaver,
+  putNaver,
+  deleteNaver,
+} from "../../services/api"
 
 export function* fetchNaversAsync() {
   const navers = yield fetchNavers()
@@ -24,39 +31,41 @@ export function* fetchNaversAsync() {
   }
 }
 
-export function* setCurrentNaverAfterDialog({ payload }) {
+export function* setCurrentNaverAfterDetailDialog({ payload }) {
   if (payload) {
     yield put(setCurrentNaver(payload))
   }
 }
 
 export function* postNaverAsync({ payload }) {
-  const feedback = yield postNaver(payload)
-
+  const { naver, feedback } = yield postNaver(payload)
+  console.log(naver)
+  console.log(feedback)
   try {
-    yield put(postNaverSuccess(feedback))
+    yield put(postNaverSuccess({ naver, feedback }))
   } catch (error) {
     yield put(postNaverFailure(error))
   }
 }
 
 export function* putNaverAsync({ payload }) {
-  const feedback = yield putNaver(payload)
-
+  const { naver, feedback } = yield putNaver(payload)
+  console.log(naver)
+  console.log(feedback)
   try {
-    yield put(putNaverSuccess(feedback))
+    yield put(putNaverSuccess({ naver, feedback }))
   } catch (error) {
     yield put(putNaverFailure(error))
   }
 }
 
 export function* deleteNaverAsync({ payload }) {
-  const feedback = yield putNaver(payload)
+  const feedback = yield deleteNaver(payload)
 
   try {
-    yield put(putNaverSuccess(feedback))
+    yield put(deleteNaverSuccess(feedback))
   } catch (error) {
-    yield put(putNaverFailure(error))
+    yield put(deleteNaverFailure(error))
   }
 }
 
@@ -67,7 +76,7 @@ export function* onFetchNaversStart() {
 export function* onToggleNaverDetailDialog() {
   yield takeLatest(
     DialogActionTypes.TOGGLE_NAVER_DETAIL_DIALOG,
-    setCurrentNaverAfterDialog,
+    setCurrentNaverAfterDetailDialog,
   )
 }
 
@@ -83,6 +92,14 @@ export function* onDeleteNaverStart() {
   yield takeLatest(NaverActionTypes.DELETE_NAVER_START, deleteNaverAsync)
 }
 
+export function* onPutNaverSuccess() {
+  yield takeLatest(NaverActionTypes.PUT_NAVER_SUCCESS, fetchNaversAsync)
+}
+
+export function* onDeleteNaverSuccess() {
+  yield takeLatest(NaverActionTypes.DELETE_NAVER_SUCCESS, fetchNaversAsync)
+}
+
 export function* naverSagas() {
   yield all([
     call(onFetchNaversStart),
@@ -90,5 +107,7 @@ export function* naverSagas() {
     call(onPostNaverStart),
     call(onPutNaverStart),
     call(onDeleteNaverStart),
+    call(onPutNaverSuccess),
+    call(onDeleteNaverSuccess),
   ])
 }

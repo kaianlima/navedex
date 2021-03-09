@@ -5,7 +5,7 @@ import NaverActionTypes from "../naver/naver.types"
 import { toggleNaverFeedbackDialog } from "./dialog.actions"
 
 export function* toggleNaverFeedbackDialogAfterSuccess() {
-  yield put(toggleNaverFeedbackDialog)
+  yield put(toggleNaverFeedbackDialog())
 }
 
 export function* onCreateNaver() {

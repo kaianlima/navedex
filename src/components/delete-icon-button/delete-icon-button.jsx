@@ -8,20 +8,14 @@ import { toggleNaverDeleteDialog } from "../../redux/dialog/dialog.actions"
 
 const DeleteIconButton = ({ id, toggleNaverDeleteDialog }) => {
   return (
-    <IconButton
-      size="small"
-      onClick={() => {
-        toggleNaverDeleteDialog(id)
-      }}
-    >
+    <IconButton size="small" onClick={toggleNaverDeleteDialog}>
       <DeleteIcon color="secondary" />
     </IconButton>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleNaverDeleteDialog: (naverId) =>
-    dispatch(toggleNaverDeleteDialog(naverId)),
+  toggleNaverDeleteDialog: () => dispatch(toggleNaverDeleteDialog()),
 })
 
 export default connect(null, mapDispatchToProps)(DeleteIconButton)

@@ -77,7 +77,10 @@ const NaverDeleteDialog = ({
                     color="secondary"
                     size="large"
                     fullWidth
-                    onClick={deleteNaverStart}
+                    onClick={() => {
+                      deleteNaverStart(naver.id)
+                      toggleNaverDeleteDialog()
+                    }}
                   >
                     <span className={classes.buttonText}>Excluir</span>
                   </Button>
@@ -98,7 +101,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleNaverDeleteDialog: () => dispatch(toggleNaverDeleteDialog()),
-  deleteNaverStart: () => dispatch(deleteNaverStart()),
+  deleteNaverStart: (naverId) => dispatch(deleteNaverStart(naverId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NaverDeleteDialog)

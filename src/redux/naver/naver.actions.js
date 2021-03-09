@@ -24,9 +24,9 @@ export const postNaverStart = (naver) => ({
   payload: naver,
 })
 
-export const postNaverSuccess = (feedback) => ({
+export const postNaverSuccess = ({ naver, feedback }) => ({
   type: NaverActionTypes.POST_NAVER_SUCCESS,
-  payload: feedback,
+  payload: { naver, feedback },
 })
 
 export const postNaverFailure = (error) => ({
@@ -39,9 +39,9 @@ export const putNaverStart = (naver) => ({
   payload: naver,
 })
 
-export const putNaverSuccess = (feedback) => ({
+export const putNaverSuccess = ({ naver, feedback }) => ({
   type: NaverActionTypes.PUT_NAVER_SUCCESS,
-  payload: feedback,
+  payload: { naver, feedback },
 })
 
 export const putNaverFailure = (error) => ({

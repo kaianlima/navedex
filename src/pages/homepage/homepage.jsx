@@ -8,7 +8,8 @@ import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 
-import NaversOverview from "../../components/navers-overview/navers-overview"
+import NaversOverviewContainer from "../../components/navers-overview/navers-overview.container"
+import ErrorBoundary from "../../components/error-boundary/error-boundary"
 import { fetchNaversStart } from "../../redux/naver/naver.actions"
 
 const useStyles = makeStyles((theme) => ({
@@ -60,8 +61,10 @@ const Homepage = ({ fetchNaversStart }) => {
             </Button>
           </Grid>
         </Grid>
-        <Grid container item xs={12}>
-          <NaversOverview />
+        <Grid container item xs={12} justify="center">
+          <ErrorBoundary>
+            <NaversOverviewContainer />
+          </ErrorBoundary>
         </Grid>
       </Grid>
     </main>

@@ -26,8 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Naver = ({ naverFeedbackDialogOpen, toggleNaverFeedbackDialog }) => {
+const Naver = ({
+  match,
+  naverFeedbackDialogOpen,
+  toggleNaverFeedbackDialog,
+}) => {
   const classes = useStyles()
+
+  const title = match.params.id ? "Editar Naver" : "Adicionar Naver"
 
   return (
     <main className={classes.root}>
@@ -47,12 +53,12 @@ const Naver = ({ naverFeedbackDialogOpen, toggleNaverFeedbackDialog }) => {
             </Grid>
             <Grid item>
               <Typography className={classes.title} variant="h5" component="h2">
-                Adicionar Naver
+                {title}
               </Typography>
             </Grid>
           </Grid>
           <Grid container item>
-            <NaverForm />
+            <NaverForm id={match.params.id} />
           </Grid>
         </Grid>
       </Grid>

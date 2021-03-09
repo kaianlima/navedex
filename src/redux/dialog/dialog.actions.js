@@ -4,9 +4,8 @@ export const toggleTripDialog = () => ({
   type: DialogActionTypes.TOGGLE_TRIP_DIALOG,
 })
 
-export const toggleNaverDeleteDialog = (naverId) => ({
+export const toggleNaverDeleteDialog = () => ({
   type: DialogActionTypes.TOGGLE_NAVER_DELETE_DIALOG,
-  payload: naverId,
 })
 
 export const toggleNaverDetailDialog = (naver) => ({
