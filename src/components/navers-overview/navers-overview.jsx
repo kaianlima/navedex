@@ -2,8 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { createStructuredSelector } from "reselect"
 
-import { makeStyles } from "@material-ui/core/styles"
-import { useTheme } from "@material-ui/core/styles"
+import { makeStyles, useTheme } from "@material-ui/core/styles"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import Grid from "@material-ui/core/Grid"
 
@@ -24,6 +23,7 @@ const NaversOverview = ({ navers, naver }) => {
   const classes = useStyles()
   const theme = useTheme()
   const matchesSm = useMediaQuery(theme.breakpoints.down("sm"))
+  const matchesXs = useMediaQuery(theme.breakpoints.down("xs"))
 
   return (
     <Grid container spacing={5}>
@@ -34,7 +34,7 @@ const NaversOverview = ({ navers, naver }) => {
               key={index}
               className={classes.root}
               item
-              xs={matchesSm ? 6 : 3}
+              xs={matchesSm ? (matchesXs ? 12 : 6) : 3}
             >
               <NaverCard {...naverProps} />
             </Grid>

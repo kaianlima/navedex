@@ -4,7 +4,8 @@ import { connect } from "react-redux"
 import { createStructuredSelector } from "reselect"
 
 import { Formik, Form } from "formik"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, useTheme } from "@material-ui/core/styles"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
 import Grid from "@material-ui/core/Grid"
 import LinearProgress from "@material-ui/core/LinearProgress"
 
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
   const classes = useStyles()
+  const theme = useTheme()
+  const matchesXs = useMediaQuery(theme.breakpoints.down("xs"))
 
   const history = useHistory()
   const values = {
@@ -55,14 +58,14 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
         <Form>
           <Grid container direction="column" spacing={4} item>
             <Grid container item spacing={4}>
-              <Grid item xs={6}>
+              <Grid item xs={matchesXs ? 12 : 6}>
                 <CustomInputField
                   name="name"
                   type="text"
                   labelPlaceholder="Nome"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={matchesXs ? 12 : 6}>
                 <CustomInputField
                   name="job_role"
                   type="text"
@@ -71,7 +74,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
               </Grid>
             </Grid>
             <Grid container item spacing={4}>
-              <Grid item xs={6}>
+              <Grid item xs={matchesXs ? 12 : 6}>
                 <CustomInputField
                   name="birthdate"
                   type="text"
@@ -81,7 +84,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={matchesXs ? 12 : 6}>
                 <CustomInputField
                   name="admission_date"
                   type="text"
@@ -93,14 +96,14 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
               </Grid>
             </Grid>
             <Grid container item spacing={4}>
-              <Grid item xs={6}>
+              <Grid item xs={matchesXs ? 12 : 6}>
                 <CustomInputField
                   name="project"
                   type="text"
                   labelPlaceholder="Projetos que participou"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={matchesXs ? 12 : 6}>
                 <CustomInputField
                   name="url"
                   type="text"
@@ -110,7 +113,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
             </Grid>
             {isSubmitting && <LinearProgress />}
             <Grid container item justify="flex-end">
-              <Grid item xs={4}>
+              <Grid item xs={matchesXs ? 6 : 4}>
                 <CustomButton
                   color="secondary"
                   isSubmitting={isSubmitting}
