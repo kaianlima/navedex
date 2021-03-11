@@ -9,7 +9,8 @@ import Typography from "@material-ui/core/Typography"
 import IconButton from "@material-ui/core/IconButton"
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos"
 
-import NaverForm from "../../components/naver-form/naver-form"
+import NaverFormContainer from "../../components/naver-form/naver-form.container"
+import ErrorBoundary from "../../components/error-boundary/error-boundary"
 import { selectNaverDetailDialogOpen } from "../../redux/dialog/dialog.selectors"
 import { toggleNaverDetailDialog } from "../../redux/dialog/dialog.actions"
 
@@ -60,7 +61,9 @@ const Naver = ({ match, naverDetailDialogOpen, toggleNaverDetailDialog }) => {
             </Grid>
           </Grid>
           <Grid container item>
-            <NaverForm id={match.params.id} />
+            <ErrorBoundary>
+              <NaverFormContainer id={match.params.id} />
+            </ErrorBoundary>
           </Grid>
         </Grid>
       </Grid>

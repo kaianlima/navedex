@@ -6,7 +6,9 @@ import NaverActionTypes from "./naver.types"
 import {
   fetchNaversSuccess,
   fetchNaversFailure,
-  setCurrentNaver,
+  fetchNaverDetailStart,
+  fetchNaverDetailSuccess,
+  fetchNaverDetailFailure,
   postNaverSuccess,
   postNaverFailure,
   putNaverSuccess,
@@ -16,6 +18,7 @@ import {
 } from "./naver.actions"
 import {
   fetchNavers,
+  fetchNaverDetail,
   postNaver,
   putNaver,
   deleteNaver,
@@ -31,10 +34,24 @@ export function* fetchNaversAsync() {
   }
 }
 
-export function* setCurrentNaverAfterDialog({ payload }) {
+export function* fetchNaverDetailAsync({ payload }) {
   console.log(payload)
   if (payload) {
-    yield put(setCurrentNaver(payload))
+    const naver = yield fetchNaverDetail(payload)
+
+    try {
+      yield put(fetchNaverDetailSuccess(naver))
+    } catch (error) {
+      yield put(fetchNaverDetailFailure(error))
+    }
+  }
+}
+
+export function* fetchNaverDetailAfterDialog({ payload }) {
+  console.log(payload)
+
+  if (payload) {
+    yield put(fetchNaverDetailStart(payload))
   }
 }
 
@@ -72,17 +89,24 @@ export function* onFetchNaversStart() {
   yield takeLatest(NaverActionTypes.FETCH_NAVERS_START, fetchNaversAsync)
 }
 
+export function* onFetchNaverDetailStart() {
+  yield takeLatest(
+    NaverActionTypes.FETCH_NAVER_DETAIL_START,
+    fetchNaverDetailAsync,
+  )
+}
+
 export function* onToggleNaverDetailDialog() {
   yield takeLatest(
     DialogActionTypes.TOGGLE_NAVER_DETAIL_DIALOG,
-    setCurrentNaverAfterDialog,
+    fetchNaverDetailAfterDialog,
   )
 }
 
 export function* onToggleNaverDeleteDialog() {
   yield takeLatest(
     DialogActionTypes.TOGGLE_NAVER_DELETE_DIALOG,
-    setCurrentNaverAfterDialog,
+    fetchNaverDetailAfterDialog,
   )
 }
 
@@ -109,6 +133,7 @@ export function* onDeleteNaverSuccess() {
 export function* naverSagas() {
   yield all([
     call(onFetchNaversStart),
+    call(onFetchNaverDetailStart),
     call(onToggleNaverDetailDialog),
     call(onToggleNaverDeleteDialog),
     call(onPostNaverStart),

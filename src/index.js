@@ -21,9 +21,6 @@ const theme = createMuiTheme({
     secondary: {
       main: "#212121",
     },
-    neutral: {
-      main: "#99A8B2",
-    },
   },
   typography: {
     fontFamily: ["Montserrat", "sans-serif"].join(","),

@@ -14,9 +14,19 @@ export const fetchNaversFailure = (error) => ({
   payload: error,
 })
 
-export const setCurrentNaver = (naver) => ({
-  type: NaverActionTypes.SET_CURRENT_NAVER,
+export const fetchNaverDetailStart = (naverId) => ({
+  type: NaverActionTypes.FETCH_NAVER_DETAIL_START,
+  payload: naverId,
+})
+
+export const fetchNaverDetailSuccess = (naver) => ({
+  type: NaverActionTypes.FETCH_NAVER_DETAIL_SUCCESS,
   payload: naver,
+})
+
+export const fetchNaverDetailFailure = (error) => ({
+  type: NaverActionTypes.FETCH_NAVER_DETAIL_FAILURE,
+  payload: error,
 })
 
 export const postNaverStart = (naver) => ({

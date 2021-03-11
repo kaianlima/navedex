@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 })
 
 const NaverDeleteDialog = ({
-  naver,
+  naverId,
   naverDeleteDialogOpen,
   naverDetailDialogOpen,
   toggleNaverDeleteDialog,
@@ -50,7 +50,7 @@ const NaverDeleteDialog = ({
 
   return (
     <>
-      {naver ? (
+      {naverId ? (
         <Dialog
           open={naverDeleteDialogOpen}
           onClose={toggleNaverDeleteDialog}
@@ -86,7 +86,7 @@ const NaverDeleteDialog = ({
                     size="large"
                     fullWidth
                     onClick={() => {
-                      deleteNaverStart(naver.id)
+                      deleteNaverStart(naverId)
                       toggleNaverDeleteDialog()
 
                       if (naverDetailDialogOpen) {

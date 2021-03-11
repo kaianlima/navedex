@@ -53,7 +53,7 @@ const NaverCard = ({
     <Card className={classes.root}>
       <CardActionArea
         onClick={() => {
-          toggleNaverDetailDialog(naverData)
+          toggleNaverDetailDialog(id)
         }}
       >
         <CardMedia
@@ -76,16 +76,15 @@ const NaverCard = ({
         </Typography>
       </CardContent>
       <CardActions className={classes.iconsContainer}>
-        <DeleteIconButton naver={naverData} />
-        <EditIconButton naver={naverData} />
+        <DeleteIconButton naverId={id} />
+        <EditIconButton naverId={id} />
       </CardActions>
     </Card>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleNaverDetailDialog: (naverData) =>
-    dispatch(toggleNaverDetailDialog(naverData)),
+  toggleNaverDetailDialog: (id) => dispatch(toggleNaverDetailDialog(id)),
 })
 
 export default connect(null, mapDispatchToProps)(NaverCard)

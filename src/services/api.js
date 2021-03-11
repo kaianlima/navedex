@@ -15,6 +15,8 @@ const api = axios.create(config)
 api.interceptors.response.use((response) => response.data)
 
 let user = null
+let navers = null
+let naver = null
 
 export const postUserLogin = async (email, password) => {
   try {
@@ -43,7 +45,6 @@ export const removeBearerToken = () => {
 }
 
 export const fetchNavers = async () => {
-  let navers = null
   setBearerToken()
 
   try {
@@ -54,8 +55,18 @@ export const fetchNavers = async () => {
   return navers
 }
 
+export const fetchNaverDetail = async (naverId) => {
+  setBearerToken()
+
+  try {
+    naver = await api.get(`navers/${naverId}`)
+  } catch (error) {
+    throw error.message
+  }
+  return naver
+}
+
 export const postNaver = async (naverData) => {
-  let naver = null
   setBearerToken()
 
   let { name, admission_date, job_role, project, birthdate, url } = naverData
@@ -84,7 +95,6 @@ export const postNaver = async (naverData) => {
 }
 
 export const putNaver = async (naverData) => {
-  let naver = null
   setBearerToken()
 
   let {

@@ -63,6 +63,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
                   name="name"
                   type="text"
                   labelPlaceholder="Nome"
+                  autoComplete="off"
                 />
               </Grid>
               <Grid item xs={matchesXs ? 12 : 6}>
@@ -79,6 +80,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
                   name="birthdate"
                   type="text"
                   labelPlaceholder="Ano de Nascimento"
+                  autoComplete="off"
                   InputProps={{
                     inputComponent: MaskFormatDate,
                   }}
@@ -89,6 +91,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
                   name="admission_date"
                   type="text"
                   labelPlaceholder="Data de Admissão"
+                  autoComplete="off"
                   InputProps={{
                     inputComponent: MaskFormatDate,
                   }}
@@ -101,6 +104,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
                   name="project"
                   type="text"
                   labelPlaceholder="Projetos que participou"
+                  autoComplete="off"
                 />
               </Grid>
               <Grid item xs={matchesXs ? 12 : 6}>
@@ -108,6 +112,7 @@ const NaverForm = ({ id, naver, postNaverStart, putNaverStart }) => {
                   name="url"
                   type="text"
                   labelPlaceholder="URL da foto do Naver"
+                  autoComplete="off"
                 />
               </Grid>
             </Grid>

@@ -16,6 +16,10 @@ export const selectIsFetching = createSelector(
   [selectNaver],
   (naver) => naver.isFetching,
 )
+export const selectIsFetchingDetail = createSelector(
+  [selectNaver],
+  (naver) => naver.isFetchingDetail,
+)
 
 export const selectCurrentNaver = createSelector(
   [selectNaver],

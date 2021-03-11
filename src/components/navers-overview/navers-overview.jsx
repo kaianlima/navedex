@@ -39,8 +39,9 @@ const NaversOverview = ({ navers, naver }) => {
               <NaverCard {...naverProps} />
             </Grid>
           ))}
+
           <NaverDetailDialog naver={naver} />
-          <NaverDeleteDialog naver={naver} />
+          <NaverDeleteDialog naverId={naver.id} />
           <NaverFeedbackDialog />
         </>
       ) : null}

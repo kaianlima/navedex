@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   feedback: null,
   navers: null,
   isFetching: false,
+  isFetchingDetail: false,
   error: null,
 }
 
@@ -15,21 +16,34 @@ const NaverReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isFetching: true,
       }
+    case NaverActionTypes.FETCH_NAVER_DETAIL_START:
+      return {
+        ...state,
+        isFetchingDetail: true,
+      }
     case NaverActionTypes.FETCH_NAVERS_SUCCESS:
       return {
         ...state,
         navers: action.payload,
-        isAuthenticated: false,
         isFetching: false,
         error: null,
       }
+    case NaverActionTypes.FETCH_NAVER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        currentNaver: action.payload,
+        isFetchingDetail: false,
+        error: null,
+      }
     case NaverActionTypes.FETCH_NAVERS_FAILURE:
+    case NaverActionTypes.FETCH_NAVER_DETAIL_FAILURE:
     case NaverActionTypes.POST_NAVER_FAILURE:
     case NaverActionTypes.PUT_NAVER_FAILURE:
     case NaverActionTypes.DELETE_NAVER_FAILURE:
       return {
         ...state,
         isFetching: false,
+        isFetchingDetail: false,
         error: action.payload,
       }
     case NaverActionTypes.SET_CURRENT_NAVER:

@@ -6,13 +6,14 @@ import DeleteIcon from "@material-ui/icons/Delete"
 
 import { toggleNaverDeleteDialog } from "../../redux/dialog/dialog.actions"
 
-const DeleteIconButton = ({ naver, toggleNaverDeleteDialog }) => {
+const DeleteIconButton = ({ naverId, toggleNaverDeleteDialog }) => {
   return (
     <IconButton
       size="small"
       onClick={() => {
-        if (naver) {
-          toggleNaverDeleteDialog(naver)
+        console.log(naverId)
+        if (naverId) {
+          toggleNaverDeleteDialog(naverId)
         }
       }}
     >
@@ -22,7 +23,8 @@ const DeleteIconButton = ({ naver, toggleNaverDeleteDialog }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleNaverDeleteDialog: (naver) => dispatch(toggleNaverDeleteDialog(naver)),
+  toggleNaverDeleteDialog: (naverId) =>
+    dispatch(toggleNaverDeleteDialog(naverId)),
 })
 
 export default connect(null, mapDispatchToProps)(DeleteIconButton)
