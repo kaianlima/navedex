@@ -15,7 +15,3 @@ Foram utilizadas as seguintes ferramentas:
 - Axios
 - Formik
 - Date-fns
-
-## Detalhe
-
-Para a visualição individual do naver foi utilizado o store do redux, por ser melhor em questão de UX ao evitar loading desnecessário, já que os dados já foram obtidos.
